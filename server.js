@@ -7,9 +7,9 @@ const PORT = process.env.PORT || 3500;
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions');
 const Credentials = require('./middleware/credentials')
-const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
 connectDB();
+
 
 app.use(Credentials);
 app.use(cors(corsOptions));
@@ -21,8 +21,10 @@ app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'))
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
+app.use('/users', require('./routes/api/users'));
+app.use('/employees', require('./routes/api/employees'));
 
-app.use(verifyJWT)
+
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
